@@ -75,5 +75,5 @@ app.post("/assistant", async (req, res) => {
 // Start the server
 app.listen(port || 3000, () => {
 
-console.log(`Server listening at http://localhost:${port}`);
+console.log(`Server  at http://localhost:${port}`);
 });
