@@ -1,11 +1,10 @@
 import express from "express";
 import { OpenAI } from "openai";
-import { static as staticc } from "express";
 
 const app = express();
 const port = process.env.PORT || 3000; // Use the PORT environment variable if provided, otherwise default to 3000
 
-app.use(express.staticc("public"));
+app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 
 
