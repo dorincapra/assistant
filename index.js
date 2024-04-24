@@ -2,7 +2,7 @@ import express from "express";
 import { OpenAI } from "openai";
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000; // Use the PORT environment variable if provided, otherwise default to 3000
 
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
@@ -72,8 +72,8 @@ app.post("/assistant", async (req, res) => {
   }
 });
 
-// Start the server
-app.listen(port || 3000, () => {
 
-console.log(`Server  at http://localhost:${port}`);
+app.listen(port, () => {
+  console.log(`Server listening at http://your-droplet-ip:${port}`); // Replace "your-droplet-ip" with your server's public IP address or domain name
 });
+
