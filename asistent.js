@@ -4,7 +4,7 @@ const openai = new OpenAI();
 const asstID = "asst_qVaITkJsmfVNGzdv05Rm2izr";
 
 const thread = await openai.beta.threads.create(
-  "sk-proj-YFDdZNSnt5oHh1ERzO0UT3BlbkFJMklZUu84oihHDDYEA4W6"
+  "sk-proj-"
 );
 console.log(thread);
 const message = await openai.beta.threads.messages.create(thread.id, {
