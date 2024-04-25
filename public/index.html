@@ -10,7 +10,7 @@
     <h1>ChatGPT</h1>
     <div id="chat-area">
       <p>
-        <span class="assistant-message"
+        <span class="assistant-message complete"
           >Asistent: Salut, cu ce te pot ajuta?</span
         >
       </p>
@@ -30,20 +30,17 @@
           const userInput = document.getElementById("user-input").value.trim();
           if (userInput === "") return;
 
+          // Append user's message to chat area
+          const userMessage = document.createElement("p");
+          userMessage.classList.add("user-message");
+          userMessage.textContent = `Tu: ${userInput}`;
+          document.getElementById("chat-area").appendChild(userMessage);
+
+          // Clear input field
+          document.getElementById("user-input").value = "";
+
+          // Fetch response from server
           try {
-            const chatArea = document.getElementById("chat-area");
-            // Append user's message to chat area
-            const divUser = document.createElement("p");
-            const userMessageParagraph = document.createElement("span");
-            divUser.appendChild(userMessageParagraph);
-            userMessageParagraph.classList.add("user-message");
-            userMessageParagraph.textContent = `Tu: ${userInput}`;
-            chatArea.appendChild(divUser);
-
-            // Clear input field
-            document.getElementById("user-input").value = "";
-
-            // Fetch response from server
             const response = await fetch("/assistant", {
               method: "POST",
               headers: {
@@ -52,61 +49,63 @@
               body: new URLSearchParams({ userInput: userInput }),
             });
 
-            // Check if response is successful
             if (!response.ok) {
               throw new Error(
                 `Server responded with status ${response.status}`
               );
             }
 
-            // Process response bit by bit
             const reader = response.body.getReader();
-            const decoder = new TextDecoder();
-            let partialResponse = "";
+            let lastParagraph = document.createElement("span");
+            lastParagraph.className = "assistant-message";
+            document.getElementById("chat-area").appendChild(lastParagraph);
+            let isFirstChunk = true;
+            let firstDeltaReceived = false;
+            let initialText = "";
 
-            while (true) {
-              const { done, value } = await reader.read();
-              if (done) break;
-
-              // Decode the chunk of data and add it to the partial response
-              const chunk = decoder.decode(value, { stream: true });
-              partialResponse += chunk;
-
-              // Split partial response into paragraphs
-              const paragraphs = partialResponse.split("\n");
-
-              // Concatenate all response fragments into one paragraph
-              let aiResponseText = "";
-              paragraphs.forEach((paragraph) => {
-                // Remove "assistant > " from the beginning of each paragraph
-                const responseText = paragraph.replace(
-                  /^assistant > /,
-                  "Asistent: \r\n"
-                );
-                aiResponseText += responseText;
-              });
-
-              // Create a single paragraph for the concatenated response
-              const divResponse = document.createElement("p");
-              const aiResponseParagraph = document.createElement("span");
-              aiResponseParagraph.classList.add("assistant-message");
-              aiResponseParagraph.textContent = aiResponseText;
-              divResponse.appendChild(aiResponseParagraph);
-
-              //Clear the chat area before appending the new response
-              if (!chatArea.lastElementChild.textContent.startsWith("Tu")) {
-                chatArea.removeChild(chatArea.lastElementChild);
+            function handleStream(data) {
+              if (data.type === "textCreated" && isFirstChunk) {
+                initialText = data.text.value;
+                lastParagraph.textContent = `Asistent: ${initialText.replace(
+                  /\【.*?\】/g,
+                  ""
+                )}`;
+                isFirstChunk = false; // Now handle subsequent deltas normally
+              } else if (data.type === "textDelta") {
+                if (!firstDeltaReceived && data.textDelta === initialText) {
+                  // If the first delta is identical to the initial text, ignore it
+                  firstDeltaReceived = true; // Mark the first delta as received
+                } else {
+                  lastParagraph.textContent += data.textDelta.replace(
+                    /\【.*?\】/g,
+                    ""
+                  );
+                }
               }
-
-              // Append the concatenated paragraph to chat area
-              chatArea.appendChild(divResponse);
-
-              // Update partial response with remaining text
-              partialResponse = paragraphs.pop() || "";
             }
+
+            reader.read().then(function processText({ done, value }) {
+              if (done) {
+                lastParagraph.classList.add("complete");
+                return;
+              }
+              const chunk = new TextDecoder().decode(value, { stream: true });
+              // It is possible that more than one JSON object is in a single chunk, hence the loop
+              const jsonChunks = chunk.match(/\{.*?\}(?=\{)|\{.*?\}$/g);
+              if (jsonChunks) {
+                jsonChunks.forEach((json) => {
+                  try {
+                    const data = JSON.parse(json);
+                    handleStream(data);
+                  } catch (e) {
+                    console.error("Error parsing JSON:", e);
+                  }
+                });
+              }
+              return reader.read().then(processText);
+            });
           } catch (error) {
             console.error("A apărut o eroare:", error);
-            // Display error message in chat area
             const errorParagraph = document.createElement("p");
             errorParagraph.textContent = `A apărut o eroare: ${error.message}`;
             document.getElementById("chat-area").appendChild(errorParagraph);

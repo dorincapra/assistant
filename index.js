@@ -7,13 +7,12 @@ import { fileURLToPath } from "url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const app = express();
-const port = process.env.PORT || 3000; // Use the PORT environment variable if provided, otherwise default to 3000
+const port = process.env.PORT || 3000;
 
-app.use(express.static(path.join(__dirname, 'public')));
-
+app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json()); // Make sure the server can parse JSON bodies
 
-// Allow CORS
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
@@ -23,7 +22,6 @@ app.use((req, res, next) => {
   next();
 });
 
-// Main page
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
 });
@@ -40,7 +38,7 @@ app.post("/assistant", async (req, res) => {
       thread = await openai.beta.threads.create();
     }
 
-    const message = await openai.beta.threads.messages.create(thread.id, {
+    await openai.beta.threads.messages.create(thread.id, {
       role: "user",
       content: userInput,
     });
@@ -49,22 +47,16 @@ app.post("/assistant", async (req, res) => {
       .stream(thread.id, {
         assistant_id: asstID,
       })
-      .on("textCreated", (text) => res.write("\nassistant > "))
-      .on("textDelta", (textDelta, snapshot) => res.write(textDelta.value))
-      .on("toolCallDelta", (toolCallDelta, snapshot) => {
-        if (toolCallDelta.type === "file_search") {
-          if (toolCallDelta.file_search.input) {
-            // Add appropriate handling
-          }
-          if (toolCallDelta.file_search.outputs) {
-            res.write("\noutput >\n");
-            toolCallDelta.file_search.outputs.forEach((output) => {
-              if (output.type === "logs") {
-                // Add appropriate handling
-              }
-            });
-          }
-        }
+      .on("textCreated", (text) => {
+        res.write(JSON.stringify({ type: "textCreated", text: text }));
+      })
+      .on("textDelta", (textDelta, snapshot) => {
+        res.write(
+          JSON.stringify({ type: "textDelta", textDelta: textDelta.value })
+        );
+      })
+      .on("complete", () => {
+        res.end();
       });
   } catch (error) {
     console.error("Error:", error);
@@ -73,5 +65,5 @@ app.post("/assistant", async (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Server listening at http://your-droplet-ip:${port}`);
+  console.log(`Server listening at http://localhost:${port}`);
 });
