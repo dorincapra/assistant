@@ -21,7 +21,7 @@ app.use((req, res, next) => {
 
 // Main page
 app.get("/", (req, res) => {
-  res.sendFile(path.join(process.cwd(), "public", "index.html"));
+res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
 let thread = null;
