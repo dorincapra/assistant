@@ -1,5 +1,6 @@
 import express from "express";
 import { OpenAI } from "openai";
+import path from "path";
 
 
 const app = express();
