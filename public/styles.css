@@ -9,6 +9,7 @@ body {
 h1 {
   text-align: center;
   color: #0056b3; /* Light blue color for headings */
+  margin-top: 20px; /* Added top margin for spacing */
 }
 
 #chat-area {
@@ -24,6 +25,7 @@ h1 {
 #chat-form {
   text-align: center;
   margin-top: 20px;
+  margin-bottom: 20px; /* Added bottom margin for spacing */
   width: 90%;
   margin-left: auto;
   margin-right: auto;
@@ -31,6 +33,8 @@ h1 {
 
 label {
   font-weight: bold;
+  display: block; /* Ensures the label is on its own line */
+  margin-bottom: 5px; /* Spacing below the label */
 }
 
 input[type="text"] {
@@ -50,6 +54,7 @@ button[type="submit"] {
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  margin-top: 10px; /* Ensures spacing between button and input field */
 }
 
 button[type="submit"]:hover {
@@ -63,6 +68,7 @@ button[type="submit"]:hover {
   padding: 10px;
   border-radius: 15px;
   text-align: right;
+  display: block; /* Ensures messages are on separate lines */
 }
 
 .assistant-message {
@@ -72,6 +78,7 @@ button[type="submit"]:hover {
   padding: 10px;
   border-radius: 15px;
   text-align: left;
+  display: block; /* Ensures messages are on separate lines */
 }
 
 /* Responsive adjustments */
@@ -79,10 +86,5 @@ button[type="submit"]:hover {
   #chat-area,
   #chat-form {
     width: 95%; /* Slightly narrower on very small screens */
-  }
-
-  input[type="text"],
-  button[type="submit"] {
-    width: 100%; /* Ensure full width for better usability */
   }
 }
