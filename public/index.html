@@ -93,10 +93,10 @@
               aiResponseParagraph.textContent = aiResponseText;
               divResponse.appendChild(aiResponseParagraph);
 
-              // Clear the chat area before appending the new response
-              // if (!chatArea.lastElementChild.textContent.startsWith("Tu")) {
-              //   chatArea.removeChild(chatArea.lastElementChild);
-              // }
+              //Clear the chat area before appending the new response
+              if (!chatArea.lastElementChild.textContent.startsWith("Tu")) {
+                chatArea.removeChild(chatArea.lastElementChild);
+              }
 
               // Append the concatenated paragraph to chat area
               chatArea.appendChild(divResponse);
