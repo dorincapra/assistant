@@ -14,8 +14,7 @@ body {
   text-align: center;
   color: #0056b3;
   padding: 10px 0;
-  flex-shrink: 0; /* Prevents resizing */
-  position: fixed; /* Keeps header at the top */
+  position: fixed;
   width: 100%;
   top: 0;
   left: 0;
@@ -24,16 +23,21 @@ body {
 }
 
 h1 {
-  font-size: 24px;
+  font-size: 24px; /* Adjust if necessary */
   margin: 0;
 }
 
 #chat-area {
+  position: absolute;
+  top: 50px; /* Height of the header */
+  bottom: 60px; /* Height of the input form */
+  left: 0;
+  right: 0;
   padding: 20px;
-  margin-top: 50px; /* Give enough space for the header */
-  margin-bottom: 60px; /* Give enough space for the input form */
   overflow-y: auto; /* Enables scrolling */
-  flex-grow: 1; /* Takes up available space */
+  background-color: #fff; /* Background color for chat area */
+  border-radius: 5px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 #chat-form {
