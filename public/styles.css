@@ -6,38 +6,38 @@ body {
   color: #333;
   display: flex;
   flex-direction: column;
-  height: 100%; /* Full height of the viewport */
-  overflow: hidden; /* Prevents body scroll */
+  height: 100vh; /* Full height of the viewport */
+  overflow: hidden; /* Prevents scrolling of the body */
 }
 
 #header {
   text-align: center;
   color: #0056b3;
-  padding: 10px 0;
-  position: fixed;
+  padding: 20px 0; /* Ample padding for visual separation */
+  position: fixed; /* Fixed at the top */
   width: 100%;
   top: 0;
   left: 0;
-  background: #f5f5f5; /* Same as body bg color */
-  z-index: 1000; /* Ensures it stays on top */
+  background: #f5f5f5; /* Matches the body background */
+  z-index: 1000; /* Ensures it is layered above other content */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 }
 
 h1 {
-  font-size: 24px; /* Adjust if necessary */
+  font-size: 24px; /* Smaller font size as requested */
   margin: 0;
 }
 
 #chat-area {
-  position: absolute;
-  top: 50px; /* Height of the header */
-  bottom: 60px; /* Height of the input form */
+  position: fixed; /* Fixed position to stay in place */
+  top: 70px; /* Adjust based on the height of the header */
+  bottom: 70px; /* Adjust based on the height of the chat form */
   left: 0;
   right: 0;
   padding: 20px;
-  overflow-y: auto; /* Enables scrolling */
-  background-color: #fff; /* Background color for chat area */
-  border-radius: 5px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  overflow-y: auto; /* Enables scrolling within the chat area */
+  background-color: #fff; /* Background color for contrast */
+  border-radius: 5px; /* Rounded corners for aesthetics */
 }
 
 #chat-form {
@@ -46,16 +46,16 @@ h1 {
   justify-content: space-between;
   padding: 10px;
   background-color: #f0f0f0;
-  position: fixed; /* Keeps form at the bottom */
+  position: fixed; /* Fixed at the bottom */
   width: 100%;
   bottom: 0;
   left: 0;
-  box-sizing: border-box;
+  box-sizing: border-box; /* Includes padding in width calculations */
 }
 
 input[type="text"] {
   flex: 1;
-  padding: 8px;
+  padding: 10px;
   margin-right: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -63,7 +63,7 @@ input[type="text"] {
 }
 
 button[type="submit"] {
-  padding: 8px 16px;
+  padding: 10px 20px;
   background-color: #007bff;
   color: #fff;
   border: none;
@@ -102,7 +102,7 @@ button[type="submit"]:hover {
 @media (max-width: 600px) {
   input[type="text"],
   button[type="submit"] {
-    font-size: 14px; /* Smaller font size to ensure fitting */
-    padding: 8px; /* Adjust padding */
+    font-size: 14px; /* Smaller font size for smaller devices */
+    padding: 8px; /* Adjust padding to fit smaller screens */
   }
 }
