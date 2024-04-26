@@ -85,11 +85,13 @@ body {
 }
 
 #chat-form {
+  display: flex; /* Aligns children (input and button) inline */
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
   background: #f0f0f0;
+  padding: 10px; /* Adds padding inside the form */
 }
 
 input[type="text"],
@@ -99,12 +101,31 @@ button[type="submit"] {
 }
 
 button[type="submit"] {
+  padding: 10px 20px;
   background-color: #007bff;
   color: white;
+  border: 1px solid #007bff; /* Matches the background color */
+  border-radius: 0 10px 10px 0; /* Rounded right corners */
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Styling for hover state of the button for better user feedback */
+button[type="submit"]:hover {
+  background-color: #0056b3;
 }
 
 input[type="text"] {
-  width: calc(100% - 80px); /* Adjust width to fit the button */
+  flex: 1; /* Takes up the remaining space */
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc; /* Subtle border */
+  border-right: none; /* Removes the border between the input and the button */
+  border-radius: 10px 0 0 10px; /* Rounded left corners */
+  margin-right: -1px; /* Removes gap between input and button */
 }
 
 .user-message,
