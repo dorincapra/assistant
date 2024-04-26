@@ -30,11 +30,14 @@
           const userInput = document.getElementById("user-input").value.trim();
           if (userInput === "") return;
 
-          // Append user's message to chat area
-          const userMessage = document.createElement("p");
-          userMessage.classList.add("user-message");
-          userMessage.textContent = `Tu: ${userInput}`;
-          document.getElementById("chat-area").appendChild(userMessage);
+          // Append user's message to chat area inside a span within a paragraph
+          const userParagraph = document.createElement("p");
+          userParagraph.classList.add("userP");
+          const userMessageSpan = document.createElement("span");
+          userMessageSpan.classList.add("user-message");
+          userMessageSpan.textContent = `Tu: ${userInput}`;
+          userParagraph.appendChild(userMessageSpan);
+          document.getElementById("chat-area").appendChild(userParagraph);
 
           // Clear input field
           document.getElementById("user-input").value = "";
@@ -56,8 +59,10 @@
             }
 
             const reader = response.body.getReader();
-            let lastParagraph = document.createElement("span");
-            lastParagraph.className = "assistant-message";
+            let lastParagraph = document.createElement("p");
+            let lastSpan = document.createElement("span");
+            lastSpan.className = "assistant-message";
+            lastParagraph.appendChild(lastSpan);
             document.getElementById("chat-area").appendChild(lastParagraph);
             let isFirstChunk = true;
             let firstDeltaReceived = false;
@@ -66,7 +71,7 @@
             function handleStream(data) {
               if (data.type === "textCreated" && isFirstChunk) {
                 initialText = data.text.value;
-                lastParagraph.textContent = `Asistent: ${initialText.replace(
+                lastSpan.textContent = `Asistent: ${initialText.replace(
                   /\【.*?\】/g,
                   ""
                 )}`;
@@ -76,7 +81,7 @@
                   // If the first delta is identical to the initial text, ignore it
                   firstDeltaReceived = true; // Mark the first delta as received
                 } else {
-                  lastParagraph.textContent += data.textDelta.replace(
+                  lastSpan.textContent += data.textDelta.replace(
                     /\【.*?\】/g,
                     ""
                   );
@@ -90,7 +95,6 @@
                 return;
               }
               const chunk = new TextDecoder().decode(value, { stream: true });
-              // It is possible that more than one JSON object is in a single chunk, hence the loop
               const jsonChunks = chunk.match(/\{.*?\}(?=\{)|\{.*?\}$/g);
               if (jsonChunks) {
                 jsonChunks.forEach((json) => {

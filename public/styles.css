@@ -38,7 +38,7 @@ label {
 }
 
 input[type="text"] {
-  width: 100%; /* Full width on mobile devices */
+  width: 40%; /* Full width on mobile devices */
   padding: 10px;
   margin: 10px 0;
   border: 1px solid #ccc;
@@ -46,7 +46,7 @@ input[type="text"] {
 }
 
 button[type="submit"] {
-  width: 100%; /* Full width on mobile devices */
+  width: 20%; /* Full width on mobile devices */
   padding: 10px;
   background-color: #007bff;
   color: #fff;
@@ -68,7 +68,11 @@ button[type="submit"]:hover {
   padding: 10px;
   border-radius: 15px;
   text-align: right;
-  display: block; /* Ensures messages are on separate lines */
+  display: inline-block; /* Ensures messages are on separate lines */
+}
+
+.userP {
+  text-align: right;
 }
 
 .assistant-message {
@@ -78,7 +82,7 @@ button[type="submit"]:hover {
   padding: 10px;
   border-radius: 15px;
   text-align: left;
-  display: block; /* Ensures messages are on separate lines */
+  display: inline-block; /* Ensures messages are on separate lines */
 }
 
 /* Responsive adjustments */
