@@ -35,30 +35,27 @@ h1 {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 10px; /* adjusted padding for better fitting */
+  padding: 10px;
   background-color: #f0f0f0;
   position: fixed;
-  width: calc(100% - 20px); /* adjusted width to account for padding */
+  width: 100%; /* full width */
   bottom: 0;
   left: 0;
   box-sizing: border-box;
-  flex-shrink: 0; /* prevents resizing */
 }
 
 input[type="text"] {
-  flex: 1;
-  padding: 10px;
+  flex: 1; /* allows input to fill space */
+  padding: 8px;
   margin-right: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
   font-size: 16px;
-  max-width: calc(
-    100% - 100px
-  ); /* prevents the input from expanding too much */
+  box-sizing: border-box; /* includes padding and border in the element's total width */
 }
 
 button[type="submit"] {
-  padding: 10px 20px;
+  padding: 8px 16px;
   background-color: #007bff;
   color: #fff;
   border: none;
@@ -67,7 +64,7 @@ button[type="submit"] {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 60px; /* fixed width for the button */
+  min-width: 50px; /* ensures the button does not shrink too much */
 }
 
 button[type="submit"]:hover {
@@ -101,10 +98,12 @@ button[type="submit"]:hover {
 @media (max-width: 600px) {
   #chat-area,
   #chat-form {
-    width: 100%;
     margin: 0; /* Removes any margin to fit screen width */
+    padding: 0; /* Adjust padding to ensure fitting */
   }
-  #chat-form {
-    padding: 10px; /* Consistent padding on smaller screens */
+  input[type="text"],
+  button[type="submit"] {
+    font-size: 14px; /* Smaller font size to ensure fitting */
+    padding: 8px; /* Adjust padding */
   }
 }
