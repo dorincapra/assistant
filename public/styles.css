@@ -13,14 +13,16 @@ body {
 
 #chat-container {
   position: fixed;
-  width: 96%;
-  height: 96%;
+  width: 96%; /* Full screen on mobile */
+  height: 96%; /* Full screen on mobile */
   left: 2%;
   top: 2%;
   background: white;
   border-radius: 10px;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
   visibility: hidden;
   opacity: 0;
   transition: visibility 0s 0.5s, opacity 0.5s ease;
@@ -78,6 +80,10 @@ body {
   padding: 20px;
 }
 
+#chat-area {
+  padding-bottom: 120px;
+}
+
 #chat-form {
   position: absolute;
   bottom: 0;
@@ -125,10 +131,18 @@ input[type="text"] {
   text-align: right;
 }
 
-@media (max-width: 600px) {
-  input[type="text"],
-  button[type="submit"] {
-    font-size: 14px;
-    padding: 8px;
+@media (min-width: 768px) {
+  #chat-container {
+    width: 450px; /* 20% of screen on larger screens */
+    height: 70%; /* 70% of screen height */
+    left: auto;
+    right: 2%; /* Align to the right */
+    top: 25%; /* Centered vertically */
+    position: rela;
+  }
+
+  #toggle-chat-btn {
+    right: 2%; /* Adjust position slightly if needed */
+    bottom: 2%;
   }
 }

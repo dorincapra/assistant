@@ -13,10 +13,14 @@ document
     userMessageSpan.classList.add("user-message");
     userMessageSpan.textContent = `Tu: ${userInput}`;
     userParagraph.appendChild(userMessageSpan);
-    document.getElementById("chat-area").appendChild(userParagraph);
+    const chatArea = document.getElementById("chat-area");
+    chatArea.appendChild(userParagraph);
 
     // Clear input field
     document.getElementById("user-input").value = "";
+
+    //scroll down
+    chatArea.scrollTop = chatArea.scrollHeight;
 
     // Fetch response from server
     try {
@@ -37,7 +41,7 @@ document
       let lastSpan = document.createElement("span");
       lastSpan.className = "assistant-message";
       lastParagraph.appendChild(lastSpan);
-      document.getElementById("chat-area").appendChild(lastParagraph);
+      chatArea.appendChild(lastParagraph);
       let isFirstChunk = true;
       let firstDeltaReceived = false;
       let initialText = "";
@@ -77,12 +81,14 @@ document
             }
           });
         }
+        chatArea.scrollTop = chatArea.scrollHeight;
         return reader.read().then(processText);
       });
     } catch (error) {
       console.error("A apărut o eroare:", error);
       const errorParagraph = document.createElement("p");
       errorParagraph.textContent = `A apărut o eroare: ${error.message}`;
-      document.getElementById("chat-area").appendChild(errorParagraph);
+      chatArea.appendChild(errorParagraph);
+      chatArea.scrollTop = chatArea.scrollHeight;
     }
   });
