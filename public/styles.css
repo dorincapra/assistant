@@ -43,6 +43,7 @@ input[type="text"] {
   margin: 10px 0;
   border: 1px solid #ccc;
   border-radius: 5px;
+  font-size: 16px; /* Ensures no zoom on mobile devices */
 }
 
 button[type="submit"] {
