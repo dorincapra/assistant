@@ -32,7 +32,7 @@ app.post("/assistant", async (req, res) => {
   const userInput = req.body.userInput;
   try {
     const openai = new OpenAI();
-    const asstID = "asst_qVaITkJsmfVNGzdv05Rm2izr";
+    const asstID = "asst_brtFI1tCrMRJqnlR7m3s6ZWc";
 
     if (!thread) {
       thread = await openai.beta.threads.create();
