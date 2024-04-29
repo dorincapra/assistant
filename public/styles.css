@@ -48,14 +48,20 @@ body {
   border: none;
   cursor: pointer;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: grid;
+  place-items: center;
   z-index: 200;
+  transition: all 0.5s ease;
+  visibility: visible;
+}
+
+#toggle-chat-btn:hover {
+  background-color: #0056b3;
 }
 
 #toggle-chat-btn.chat-hidden {
   display: none;
+  visibility: hidden;
 }
 
 #close-chat-btn {
@@ -77,11 +83,14 @@ body {
 #header,
 #chat-area,
 #chat-form {
-  padding: 20px;
+  padding: 15px;
 }
 
 #chat-area {
-  padding-bottom: 120px;
+  padding-bottom: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
 }
 
 #chat-form {
@@ -100,6 +109,10 @@ button[type="submit"] {
   font-size: 16px;
 }
 
+#user-input:focus-visible {
+  outline: 1px solid #007bff;
+}
+
 button[type="submit"] {
   padding: 10px 20px;
   background-color: #007bff;
@@ -111,6 +124,7 @@ button[type="submit"] {
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: all 0.5s ease;
 }
 
 /* Styling for hover state of the button for better user feedback */
@@ -131,7 +145,7 @@ input[type="text"] {
 .user-message,
 .assistant-message {
   display: inline-block;
-  padding: 10px;
+  padding: 10px 15px;
   border-radius: 15px;
   margin: 5px;
 }
@@ -158,8 +172,7 @@ input[type="text"] {
     height: 70%; /* 70% of screen height */
     left: auto;
     right: 2%; /* Align to the right */
-    top: 25%; /* Centered vertically */
-    position: rela;
+    top: 27%; /* Centered vertically */
   }
 
   #toggle-chat-btn {
