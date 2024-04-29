@@ -87,7 +87,7 @@ app.get("/script-chat.js", (req, res) => {
       function appendMessage(role, content) {
         const messageWrapper = document.createElement('p');
         const message = document.createElement('span');
-        message.classList.add(role, "complete");
+        message.classList.add(role, 'complete');
         message.textContent = role + ": " + content;
         messageWrapper.appendChild(message);
         chatArea.appendChild(messageWrapper);
@@ -128,7 +128,7 @@ app.get("/script-chat.js", (req, res) => {
               const jsonResponse = JSON.parse(response);
               if (jsonResponse.type === 'textCreated') {
                 appendMessage('Assistant', jsonResponse.text);
-              } else if (jsonResponse.type === 'textDelta') {
+              } else if jsonResponse.type === 'textDelta') {
                 appendMessage('Assistant', jsonResponse.textDelta);
               }
 
@@ -142,7 +142,6 @@ app.get("/script-chat.js", (req, res) => {
 
   res.setHeader("Content-Type", "application/javascript");
   res.send(scriptContent);
-});
 
 app.listen(port, () => {
   console.log(`Server listening at http://localhost:${port}`);
