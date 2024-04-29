@@ -3,6 +3,7 @@ import { OpenAI } from "openai";
 import path from "path";
 import { fileURLToPath } from "url";
 import bodyParser from "body-parser";
+const generateScript = require("./utils"); // Ensure this path points to your utility file
 
 // Define __dirname in ES module scope
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
