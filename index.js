@@ -75,133 +75,81 @@ app.post("/assistant", async (req, res) => {
 
 app.get("/script-chat.js", (req, res) => {
   const scriptContent = `
-  // chat-widget.js
-(function () {
-    // Create HTML structure for the chat widget
-    const createChatHTML = () => {
-        const container = document.createElement("div");
-        container.id = "chat-container";
-        container.classList.add("chat-hidden");
 
-        const closeButton = document.createElement("button");
-        closeButton.id = "close-chat-btn";
-        closeButton.style.position = "absolute";
-        closeButton.style.top = "10px";
-        closeButton.style.right = "10px";
-        closeButton.style.fontSize = "24px";
-        closeButton.style.border = "none";
-        closeButton.style.background = "none";
-        closeButton.style.cursor = "pointer";
+  // Create container element
+  const container = document.createElement("div");
+  container.id = "chat-container";
+  container.classList.add("chat-hidden");
 
-        const closeSvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-        closeSvg.setAttribute("xmlns", "http://www.w3.org/2000/svg");
-        closeSvg.setAttribute("fill", "none");
-        closeSvg.setAttribute("viewBox", "0 0 24 24");
-        closeSvg.setAttribute("stroke-width", "1.5");
-        closeSvg.setAttribute("stroke", "currentColor");
-        closeSvg.style.width = "1.5rem";
-        closeSvg.style.padding = "0.5rem";
+  // Create close button
+  const closeButton = document.createElement("button");
+  closeButton.id = "close-chat-btn";
+  closeButton.innerHTML = '
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6" style="width: 1.8rem">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+    </svg>
+  ';
+  closeButton.style.position = "absolute";
+  closeButton.style.top = "10px";
+  closeButton.style.right = "10px";
+  closeButton.style.fontSize = "24px";
+  closeButton.style.border = "none";
+  closeButton.style.background = "none";
+  closeButton.style.cursor = "pointer";
+  container.appendChild(closeButton);
 
-        const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-        path.setAttribute("stroke-linecap", "round");
-        path.setAttribute("stroke-linejoin", "round");
-        path.setAttribute("d", "M6 18 18 6M6 6l12 12");
+  // Create header
+  const header = document.createElement("div");
+  header.id = "header";
+  header.innerHTML = "<h1 style='text-align: center; margin-bottom: 0'>ChatGPT</h1>";
+  container.appendChild(header);
 
-        closeSvg.appendChild(path);
-        closeButton.appendChild(closeSvg);
-        container.appendChild(closeButton);
+  // Create chat area
+  const chatArea = document.createElement("div");
+  chatArea.id = "chat-area";
+  chatArea.style.overflowY = "auto";
+  chatArea.style.flexGrow = "1";
+  container.appendChild(chatArea);
 
-        const header = document.createElement("h3");
-        header.textContent = "Chat Assistant";
-        header.style.textAlign = "center";
-        container.appendChild(header);
+  // Create form
+  const form = document.createElement("form");
+  form.id = "chat-form";
+  form.style.flexShrink = "0";
+  form.innerHTML = '
+    <input type="text" id="user-input" name="userInput" placeholder="Introdu întrebarea ta:" />
+    <button type="submit">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="width: 1rem">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+      </svg>
+    </button>
+  ';
+  container.appendChild(form);
 
-        const chatArea = document.createElement("div");
-        chatArea.id = "chat-area";
-        chatArea.style.height = "200px";
-        chatArea.style.overflowY = "auto";
-        chatArea.style.border = "1px solid #ccc";
-        container.appendChild(chatArea);
+  // Create toggle button
+  const toggleButton = document.createElement("button");
+  toggleButton.id = "toggle-chat-btn";
+  toggleButton.innerHTML = '
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6" style="width: 1.8rem">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 0 1-.825-.242m9.345-8.334a2.126 2.126 0 0 0-.476-.095 48.64 48.64 0 0 0-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0 0 11.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155" />
+    </svg>
+  ';
+  toggleButton.style.position = "fixed";
+  toggleButton.style.bottom = "20px";
+  toggleButton.style.right = "20px";
+  toggleButton.style.width = "60px";
+  toggleButton.style.height = "60px";
+  toggleButton.style.borderRadius = "50%";
+  toggleButton.style.backgroundColor = "#007bff";
+  toggleButton.style.color = "white";
+  toggleButton.style.fontSize = "16px";
+  toggleButton.style.border = "none";
+  toggleButton.style.cursor = "pointer";
+  toggleButton.style.boxShadow = "0 0 10px rgba(0, 0, 0, 0.3)";
+  container.appendChild(toggleButton);
 
-        const form = document.createElement("form");
-        form.id = "chat-form";
-        form.style.marginTop = "10px";
+  // Append the container to the body
+  document.body.appendChild(container);
 
-        const input = document.createElement("input");
-        input.type = "text";
-        input.id = "user-input";
-        input.placeholder = "Your message...";
-        input.style.width = "80%";
-        form.appendChild(input);
-
-        const sendButton = document.createElement("button");
-        sendButton.textContent = "Send";
-        form.appendChild(sendButton);
-
-        container.appendChild(form);
-        document.body.appendChild(container);
-
-        const toggleButton = document.createElement("button");
-        toggleButton.id = "toggle-chat-btn";
-        toggleButton.textContent = "Chat";
-        toggleButton.style.position = "fixed";
-        toggleButton.style.bottom = "20px";
-        toggleButton.style.right = "20px";
-        toggleButton.style.background = "#007bff";
-        toggleButton.style.color = "#fff";
-        toggleButton.style.border = "none";
-        toggleButton.style.borderRadius = "4px";
-        document.body.appendChild(toggleButton);
-
-        return { container, toggleButton, form, input, chatArea, closeButton };
-    };
-
-    const { container, toggleButton, form, input, chatArea, closeButton } = createChatHTML();
-
-    toggleButton.addEventListener("click", () => {
-        container.classList.toggle("chat-shown");
-        toggleButton.classList.toggle("chat-hidden");
-    });
-
-    closeButton.addEventListener("click", () => {
-        container.classList.toggle("chat-shown");
-        toggleButton.classList.toggle("chat-hidden");
-    });
-
-    form.addEventListener("submit", async (e) => {
-        e.preventDefault();
-
-        const userMessage = input.value.trim();
-        if (!userMessage) return;
-
-        const userMsgElement = document.createElement("p");
-        userMsgElement.textContent = 'You: ${userMessage}';
-        chatArea.appendChild(userMsgElement);
-
-        input.value = "";
-
-        try {
-            const response = await fetch("http://your-server.com/assistant", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ userInput: userMessage }),
-            });
-
-            const { response: aiResponse } = await response.json();
-
-            const aiMsgElement = document.createElement("p");
-            aiMsgElement.textContent = 'AI: ${aiResponse}';
-            chatArea.appendChild(aiMsgElement);
-        } catch (err) {
-            console.error("Error fetching response:", err);
-            const errorMsgElement = document.createElement("p");
-            errorMsgElement.textContent = 'Error: ${err.message}';
-            chatArea.appendChild(errorMsgElement);
-        }
-    });
-})();
   `;
 
   res.setHeader("Content-Type", "application/javascript");
