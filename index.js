@@ -75,28 +75,133 @@ app.post("/assistant", async (req, res) => {
 
 app.get("/script-chat.js", (req, res) => {
   const scriptContent = `
-  (function () {
-    const createChatButton = () => {
-      const button = document.createElement("button");
-      button.id = "toggle-chat-btn";
-      button.textContent = "Chat";
-      button.style.position = "fixed";
-      button.style.bottom = "20px";
-      button.style.right = "20px";
-      button.style.width = "60px";
-      button.style.height = "60px";
-      button.style.borderRadius = "50%";
-      button.style.backgroundColor = "#007bff";
-      button.style.color = "#fff";
-      button.style.border = "none";
-      button.style.boxShadow = "0 2px 8px rgba(0, 0, 0, 0.3)";
-      button.style.cursor = "pointer";
+  // chat-widget.js
+(function () {
+    // Create HTML structure for the chat widget
+    const createChatHTML = () => {
+        const container = document.createElement("div");
+        container.id = "chat-container";
+        container.classList.add("chat-hidden");
 
-      document.body.appendChild(button);
+        const closeButton = document.createElement("button");
+        closeButton.id = "close-chat-btn";
+        closeButton.style.position = "absolute";
+        closeButton.style.top = "10px";
+        closeButton.style.right = "10px";
+        closeButton.style.fontSize = "24px";
+        closeButton.style.border = "none";
+        closeButton.style.background = "none";
+        closeButton.style.cursor = "pointer";
+
+        const closeSvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        closeSvg.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+        closeSvg.setAttribute("fill", "none");
+        closeSvg.setAttribute("viewBox", "0 0 24 24");
+        closeSvg.setAttribute("stroke-width", "1.5");
+        closeSvg.setAttribute("stroke", "currentColor");
+        closeSvg.style.width = "1.5rem";
+        closeSvg.style.padding = "0.5rem";
+
+        const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        path.setAttribute("stroke-linecap", "round");
+        path.setAttribute("stroke-linejoin", "round");
+        path.setAttribute("d", "M6 18 18 6M6 6l12 12");
+
+        closeSvg.appendChild(path);
+        closeButton.appendChild(closeSvg);
+        container.appendChild(closeButton);
+
+        const header = document.createElement("h3");
+        header.textContent = "Chat Assistant";
+        header.style.textAlign = "center";
+        container.appendChild(header);
+
+        const chatArea = document.createElement("div");
+        chatArea.id = "chat-area";
+        chatArea.style.height = "200px";
+        chatArea.style.overflowY = "auto";
+        chatArea.style.border = "1px solid #ccc";
+        container.appendChild(chatArea);
+
+        const form = document.createElement("form");
+        form.id = "chat-form";
+        form.style.marginTop = "10px";
+
+        const input = document.createElement("input");
+        input.type = "text";
+        input.id = "user-input";
+        input.placeholder = "Your message...";
+        input.style.width = "80%";
+        form.appendChild(input);
+
+        const sendButton = document.createElement("button");
+        sendButton.textContent = "Send";
+        form.appendChild(sendButton);
+
+        container.appendChild(form);
+        document.body.appendChild(container);
+
+        const toggleButton = document.createElement("button");
+        toggleButton.id = "toggle-chat-btn";
+        toggleButton.textContent = "Chat";
+        toggleButton.style.position = "fixed";
+        toggleButton.style.bottom = "20px";
+        toggleButton.style.right = "20px";
+        toggleButton.style.background = "#007bff";
+        toggleButton.style.color = "#fff";
+        toggleButton.style.border = "none";
+        toggleButton.style.borderRadius = "4px";
+        document.body.appendChild(toggleButton);
+
+        return { container, toggleButton, form, input, chatArea, closeButton };
     };
 
-    createChatButton();
-  })();
+    const { container, toggleButton, form, input, chatArea, closeButton } = createChatHTML();
+
+    toggleButton.addEventListener("click", () => {
+        container.classList.toggle("chat-shown");
+        toggleButton.classList.toggle("chat-hidden");
+    });
+
+    closeButton.addEventListener("click", () => {
+        container.classList.toggle("chat-shown");
+        toggleButton.classList.toggle("chat-hidden");
+    });
+
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const userMessage = input.value.trim();
+        if (!userMessage) return;
+
+        const userMsgElement = document.createElement("p");
+        userMsgElement.textContent = 'You: ${userMessage}';
+        chatArea.appendChild(userMsgElement);
+
+        input.value = "";
+
+        try {
+            const response = await fetch("http://your-server.com/assistant", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ userInput: userMessage }),
+            });
+
+            const { response: aiResponse } = await response.json();
+
+            const aiMsgElement = document.createElement("p");
+            aiMsgElement.textContent = 'AI: ${aiResponse}';
+            chatArea.appendChild(aiMsgElement);
+        } catch (err) {
+            console.error("Error fetching response:", err);
+            const errorMsgElement = document.createElement("p");
+            errorMsgElement.textContent = 'Error: ${err.message}';
+            chatArea.appendChild(errorMsgElement);
+        }
+    });
+})();
   `;
 
   res.setHeader("Content-Type", "application/javascript");
