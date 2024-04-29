@@ -3,7 +3,6 @@ import { OpenAI } from "openai";
 import path from "path";
 import { fileURLToPath } from "url";
 import bodyParser from "body-parser";
-import { generateScript } from "./utils.js"; // Ensure this path points to your utility file
 
 // Define __dirname in ES module scope
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -74,9 +73,73 @@ app.post("/assistant", async (req, res) => {
   }
 });
 
-// Serve the chat script dynamically
-app.get("/chat-script.js", (req, res) => {
-  const scriptContent = generateScript(); // Generate the script content dynamically
+// Serve the JavaScript code
+app.get("/scripts.js", (req, res) => {
+  const scriptContent = `
+    document.addEventListener('DOMContentLoaded', function() {
+      const chatContainer = document.getElementById('chat-container');
+      const toggleChatBtn = document.getElementById('toggle-chat-btn');
+      const closeChatBtn = document.getElementById('close-chat-btn');
+      const chatForm = document.getElementById('chat-form');
+      const chatArea = document.getElementById('chat-area');
+      const userInputField = document.getElementById('user-input');
+
+      function appendMessage(role, content) {
+        const messageWrapper = document.createElement('p');
+        const message = document.createElement('span');
+        message.classList.add(role, "complete");
+        message.textContent = role + ": " + content;
+        messageWrapper.appendChild(message);
+        chatArea.appendChild(messageWrapper);
+        chatArea.scrollTop = chatArea.scrollHeight; // Scroll to the bottom
+      }
+
+      toggleChatBtn.addEventListener('click', function() {
+        chatContainer.classList.toggle('chat-hidden');
+      });
+
+      closeChatBtn.addEventListener('click', function() {
+        chatContainer.classList.add('chat-hidden');
+      });
+
+      chatForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+        const input = userInputField.value.trim();
+
+        if (!input) return;
+
+        appendMessage('User', input);
+        userInputField.value = '';
+
+        fetch('/assistant', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ userInput: input }),
+        })
+          .then(response => response.body)
+          .then(bodyStream => {
+            const reader = bodyStream.getReader();
+            reader.read().then(function processText({ done, value }) {
+              if (done) return;
+
+              const response = new TextDecoder().decode(value);
+              const jsonResponse = JSON.parse(response);
+              if (jsonResponse.type === 'textCreated') {
+                appendMessage('Assistant', jsonResponse.text);
+              } else if (jsonResponse.type === 'textDelta') {
+                appendMessage('Assistant', jsonResponse.textDelta);
+              }
+
+              reader.read().then(processText);
+            });
+          })
+          .catch(console.error);
+      });
+    });
+  `;
+
   res.setHeader("Content-Type", "application/javascript");
   res.send(scriptContent);
 });
