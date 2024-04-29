@@ -75,12 +75,11 @@ app.post("/assistant", async (req, res) => {
 
 app.get("/script-chat.js", (req, res) => {
   const scriptContent = `
-
   // Create container element
   const container = document.createElement("div");
   container.id = "chat-container";
   container.classList.add("chat-hidden");
-
+  
   // Create close button
   const closeButton = document.createElement("button");
   closeButton.id = "close-chat-btn";
@@ -97,20 +96,20 @@ app.get("/script-chat.js", (req, res) => {
   closeButton.style.background = "none";
   closeButton.style.cursor = "pointer";
   container.appendChild(closeButton);
-
+  
   // Create header
   const header = document.createElement("div");
   header.id = "header";
   header.innerHTML = "<h1 style='text-align: center; margin-bottom: 0'>ChatGPT</h1>";
   container.appendChild(header);
-
+  
   // Create chat area
   const chatArea = document.createElement("div");
   chatArea.id = "chat-area";
   chatArea.style.overflowY = "auto";
   chatArea.style.flexGrow = "1";
   container.appendChild(chatArea);
-
+  
   // Create form
   const form = document.createElement("form");
   form.id = "chat-form";
@@ -124,7 +123,7 @@ app.get("/script-chat.js", (req, res) => {
     </button>
   ';
   container.appendChild(form);
-
+  
   // Create toggle button
   const toggleButton = document.createElement("button");
   toggleButton.id = "toggle-chat-btn";
@@ -146,9 +145,10 @@ app.get("/script-chat.js", (req, res) => {
   toggleButton.style.cursor = "pointer";
   toggleButton.style.boxShadow = "0 0 10px rgba(0, 0, 0, 0.3)";
   container.appendChild(toggleButton);
-
+  
   // Append the container to the body
   document.body.appendChild(container);
+  
 
   `;
 
