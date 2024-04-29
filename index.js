@@ -138,10 +138,11 @@ app.get("/script-chat.js", (req, res) => {
           .catch(console.error);
       });
     });
-  `;
+    `;
 
   res.setHeader("Content-Type", "application/javascript");
   res.send(scriptContent);
+});
 
 app.listen(port, () => {
   console.log(`Server listening at http://localhost:${port}`);
