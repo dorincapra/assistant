@@ -74,7 +74,7 @@ app.post("/assistant", async (req, res) => {
 });
 
 // Serve the JavaScript code
-app.get("/scripts.js", (req, res) => {
+app.get("/script-chat.js", (req, res) => {
   const scriptContent = `
     document.addEventListener('DOMContentLoaded', function() {
       const chatContainer = document.getElementById('chat-container');
