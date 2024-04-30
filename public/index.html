@@ -5,6 +5,8 @@
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0 maximum-scale=1.0, user-scalable=no"
+      http-equiv="Content-Security-Policy"
+      content="upgrade-insecure-requests"
     />
     <title>ChatGPT</title>
     <link rel="stylesheet" href="/styles.css" />
@@ -29,7 +31,7 @@
           viewBox="0 0 24 24"
           stroke-width="1.5"
           stroke="currentColor"
-          style="width: 1.5rem; padding: 0.5rem"
+          style="width: 1.5rem; padding: 0.5rem;"
         >
           <path
             stroke-linecap="round"
@@ -39,9 +41,9 @@
         </svg>
       </button>
       <div id="header">
-        <h1 style="text-align: center; margin-bottom: 0">ChatGPT</h1>
+        <h1 style="text-align: center; margin-bottom: 0;">ChatGPT</h1>
       </div>
-      <div id="chat-area" style="overflow-y: auto; flex-grow: 1">
+      <div id="chat-area" style="overflow-y: auto; flex-grow: 1;">
         <p>
           <span class="assistant-message complete"
             >Asistent: Salut, cu ce te pot ajuta?</span
@@ -49,7 +51,7 @@
         </p>
         <!-- More messages will be added here dynamically -->
       </div>
-      <form id="chat-form" style="flex-shrink: 0">
+      <form id="chat-form" style="flex-shrink: 0;">
         <input
           type="text"
           id="user-input"
@@ -58,7 +60,7 @@
         />
         <button type="submit">
           <svg
-            style="width: 1rem"
+            style="width: 1rem;"
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
@@ -83,7 +85,7 @@
         stroke-width="1.5"
         stroke="currentColor"
         class="w-6 h-6"
-        style="width: 1.8rem"
+        style="width: 1.8rem;"
       >
         <path
           stroke-linecap="round"
