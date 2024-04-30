@@ -16,12 +16,16 @@ app.use(express.json()); // Make sure the server can parse JSON bodies
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Origin", "*"); // Allows requests from any origin
+
+  // Set additional headers separately
   res.header(
     "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept",
-    "Access-Control-Allow-Origin"
+    "Origin, X-Requested-With, Content-Type, Accept"
   );
+
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+
   next();
 });
 
