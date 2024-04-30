@@ -3,7 +3,6 @@ import { OpenAI } from "openai";
 import path from "path";
 import { fileURLToPath } from "url";
 import bodyParser from "body-parser";
-import cors from "cors";
 
 // Define __dirname in ES module scope
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -15,19 +14,13 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json()); // Make sure the server can parse JSON bodies
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors());
 
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*"); // Allows requests from any origin
-
-  // // Set additional headers separately
-  // res.header(
-  //   "Access-Control-Allow-Headers",
-  //   "Origin, X-Requested-With, Content-Type, Accept"
-  // );
-
-  // res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
   next();
 });
 
