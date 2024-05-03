@@ -3,6 +3,7 @@ import { OpenAI } from "openai";
 import path from "path";
 import { fileURLToPath } from "url";
 import bodyParser from "body-parser";
+import cors from "cors";
 
 // Define __dirname in ES module scope
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -15,14 +16,14 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json()); // Make sure the server can parse JSON bodies
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
-  next();
-});
+// On the server at https://myprojects.ro
+// Configure CORS
+const corsOptions = {
+  origin: "https://calculatorleasing.ro", // Allow only this origin to access
+  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+};
+
+app.use(cors(corsOptions)); // Apply CORS middleware with the above options
 
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
