@@ -78,20 +78,6 @@ app.post("/assistant", async (req, res) => {
   }
 });
 
-// Server static JavaScript file for chat UI
-app.get("/script-chat.js", (req, res) => {
-  const scriptContent = `
-    // Create container element
-    const container = document.createElement("div");
-    container.id = "chat-container";
-    container.classList.add("chat-hidden");
-    // Code for setting up chat UI omitted for brevity
-  `;
-
-  res.setHeader("Content-Type", "application/javascript");
-  res.send(scriptContent);
-});
-
 // Start the server
 app.listen(port, () => {
   console.log(`Server listening at http://localhost:${port}`);
