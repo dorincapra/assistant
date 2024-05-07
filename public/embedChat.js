@@ -1,13 +1,12 @@
 async function embedChat(serverUrl) {
   try {
-    // Fetch the HTML content
-    const response = await fetch(`${serverUrl}/index.html`);
-    const htmlContent = await response.text();
-
-    // Create and append container
-    const container = document.createElement("div");
-    container.innerHTML = htmlContent;
-    document.body.appendChild(container);
+    // Create and append an iframe instead of fetching HTML
+    const iframe = document.createElement("iframe");
+    iframe.style.width = "100%";
+    iframe.style.height = "100%";
+    iframe.style.border = "none";
+    iframe.src = `${serverUrl}/index.html`;
+    document.body.appendChild(iframe);
 
     // Append CSS
     const cssLink = document.createElement("link");

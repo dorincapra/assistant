@@ -21,7 +21,19 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 // Middleware for static files
-app.use(express.static(path.join(__dirname, "public")));
+app.use(
+  express.static(path.join(__dirname, "public"), {
+    setHeaders: function (res, path) {
+      if (path.endsWith(".html")) {
+        res.set("Content-Type", "text/html");
+      } else if (path.endsWith(".js")) {
+        res.set("Content-Type", "application/javascript");
+      } else if (path.endsWith(".css")) {
+        res.set("Content-Type", "text/css");
+      }
+    },
+  })
+);
 
 // Middleware to parse URL-encoded and JSON bodies
 app.use(express.urlencoded({ extended: true }));
