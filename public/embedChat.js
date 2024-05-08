@@ -1,14 +1,26 @@
 async function embedChat(serverUrl) {
   try {
-    // Create and append an iframe instead of fetching HTML
+    // Create a container for the chat to isolate it from the rest of the page
+    const chatContainer = document.createElement("div");
+    chatContainer.style.position = "fixed";
+    chatContainer.style.bottom = "20px";
+    chatContainer.style.right = "20px";
+    chatContainer.style.width = "300px"; // Adjust size as needed
+    chatContainer.style.height = "400px"; // Adjust size as needed
+    chatContainer.style.zIndex = "1000"; // Ensure it's on top of other content
+    chatContainer.style.border = "1px solid #ccc"; // Optional for styling
+    chatContainer.style.boxShadow = "0 4px 6px rgba(0,0,0,0.1)"; // Optional for styling
+
+    // Create and configure the iframe
     const iframe = document.createElement("iframe");
     iframe.style.width = "100%";
     iframe.style.height = "100%";
     iframe.style.border = "none";
     iframe.src = `${serverUrl}/index.html`;
-    document.body.appendChild(iframe);
+    chatContainer.appendChild(iframe); // Append iframe to the container
+    document.body.appendChild(chatContainer); // Append container to body
 
-    // Append CSS
+    // Append CSS to the head
     const cssLink = document.createElement("link");
     cssLink.rel = "stylesheet";
     cssLink.href = `${serverUrl}/styles.css`;
