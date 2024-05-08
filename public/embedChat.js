@@ -19,8 +19,13 @@ function embedChat(serverUrl) {
 
       // Fetch and append the JavaScript
       const scriptTag = document.createElement("script");
-      scriptTag.src = `${serverUrl}/script.js`;
+      scriptTag.src = `https://myprojects.ro/scripts.js`;
       document.body.appendChild(scriptTag);
+
+      //response handler
+      const handler = document.createElement("script");
+      scriptTag.src = `https://myprojects.ro/incomingResponseHandler.js`;
+      document.body.appendChild(handler);
     })
     .catch((error) => console.error("Error embedding chat:", error));
 }
