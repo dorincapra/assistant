@@ -1,31 +1,41 @@
-// public/embedChat.js
-function embedChat(serverUrl) {
-  // Fetch the HTML content
-  fetch(`${serverUrl}/index.html`)
-    .then((response) => response.text())
-    .then((htmlContent) => {
-      // Create a container div for the chat UI
-      const container = document.createElement("div");
-      container.innerHTML = htmlContent;
+async function embedChat(serverUrl) {
+  try {
+    // Create a container for the chat to isolate it from the rest of the page
+    const chatContainer = document.createElement("div");
+    chatContainer.style.position = "fixed";
+    chatContainer.style.bottom = "20px";
+    chatContainer.style.right = "20px";
+    chatContainer.style.width = "300px"; // Adjust size as needed
+    chatContainer.style.height = "400px"; // Adjust size as needed
+    chatContainer.style.zIndex = "1000"; // Ensure it's on top of other content
+    chatContainer.style.border = "1px solid #ccc"; // Optional for styling
+    chatContainer.style.boxShadow = "0 4px 6px rgba(0,0,0,0.1)"; // Optional for styling
 
-      // Append the container to the body
-      document.body.appendChild(container);
+    // Create and configure the iframe
+    const iframe = document.createElement("iframe");
+    iframe.style.width = "100%";
+    iframe.style.height = "100%";
+    iframe.style.border = "none";
+    iframe.src = `${serverUrl}/index.html`;
+    chatContainer.appendChild(iframe); // Append iframe to the container
+    document.body.appendChild(chatContainer); // Append container to body
 
-      // Fetch and append the CSS
-      const cssLink = document.createElement("link");
-      cssLink.rel = "stylesheet";
-      cssLink.href = `https://myprojects.ro/styles.css`;
-      document.head.appendChild(cssLink);
+    // Append CSS to the head
+    const cssLink = document.createElement("link");
+    cssLink.rel = "stylesheet";
+    cssLink.href = `${serverUrl}/styles.css`;
+    document.head.appendChild(cssLink);
 
-      // Fetch and append the JavaScript
-      const scriptTag = document.createElement("script");
-      scriptTag.src = `https://myprojects.ro/scripts.js`;
-      document.body.appendChild(scriptTag);
+    // Fetch and append the JavaScript
+    const scriptTag = document.createElement("script");
+    scriptTag.src = `${serverUrl}/scripts.js`;
+    document.body.appendChild(scriptTag);
 
-      //response handler
-      const handler = document.createElement("script");
-      scriptTag.src = `https://myprojects.ro/incomingResponseHandler.js`;
-      document.body.appendChild(handler);
-    })
-    .catch((error) => console.error("Error embedding chat:", error));
+    // Response handler
+    const handler = document.createElement("script");
+    handler.src = `${serverUrl}/incomingResponseHandler.js`;
+    document.body.appendChild(handler);
+  } catch (error) {
+    console.error("Error embedding chat:", error);
+  }
 }
