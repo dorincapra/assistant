@@ -1,4 +1,4 @@
-#chat-container {
+#chat-container-assistant {
   position: fixed;
   width: 96%; /* Full screen on mobile */
   height: 96%; /* Full screen on mobile */
@@ -16,7 +16,7 @@
   z-index: 100;
 }
 
-#chat-container.chat-shown {
+#chat-container-assistant.chat-shown {
   visibility: visible;
   opacity: 1;
   transition: visibility 0s 0s, opacity 0.5s ease;
@@ -63,24 +63,26 @@
   display: none;
 }
 
-#chat-container.chat-shown #close-chat-btn {
+#chat-container-assistant.chat-shown #close-chat-btn {
   display: block;
 }
 
-#header,
-#chat-area,
-#chat-form {
+#header-assistant,
+#chat-area-assistant,
+#chat-form-assistant {
   padding: 15px;
 }
 
-#chat-area {
+#chat-area-assistant {
   padding-bottom: 50px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
+  overflow-y: auto;
+  flex-grow: 1;
 }
 
-#chat-form {
+#chat-form-assistant {
   display: flex; /* Aligns children (input and button) inline */
   position: absolute;
   bottom: 0;
@@ -90,8 +92,8 @@
   padding: 10px; /* Adds padding inside the form */
 }
 
-input[type="text"],
-button[type="submit"] {
+#user-input-assistant,
+#submit-chat-button {
   padding: 10px;
   font-size: 16px;
 }
@@ -100,7 +102,7 @@ button[type="submit"] {
   outline: 1px solid #007bff;
 }
 
-button[type="submit"] {
+#submit-chat-button {
   padding: 10px 20px;
   background-color: #007bff;
   color: white;
@@ -115,11 +117,11 @@ button[type="submit"] {
 }
 
 /* Styling for hover state of the button for better user feedback */
-button[type="submit"]:hover {
+#submit-chat-button:hover {
   background-color: #0056b3;
 }
 
-input[type="text"] {
+#user-input-assistant {
   flex: 1; /* Takes up the remaining space */
   padding: 10px;
   font-size: 16px;
@@ -154,7 +156,7 @@ input[type="text"] {
 }
 
 @media (min-width: 768px) {
-  #chat-container {
+  #chat-container-assistant {
     width: 450px; /* 20% of screen on larger screens */
     height: 70%; /* 70% of screen height */
     left: auto;

@@ -9,7 +9,7 @@
     <title>ChatGPT</title>
   </head>
   <body>
-    <div id="chat-container" class="chat-hidden">
+    <div id="chat-container-assistant" class="chat-hidden">
       <button
         id="close-chat-btn"
         style="
@@ -37,10 +37,10 @@
           />
         </svg>
       </button>
-      <div id="header">
+      <div id="header-assistant">
         <h1 style="text-align: center; margin-bottom: 0;">ChatGPT</h1>
       </div>
-      <div id="chat-area" style="overflow-y: auto; flex-grow: 1;">
+      <div id="chat-area-assistant">
         <p>
           <span class="assistant-message complete"
             >Asistent: Salut, cu ce te pot ajuta?</span
@@ -48,14 +48,14 @@
         </p>
         <!-- More messages will be added here dynamically -->
       </div>
-      <form id="chat-form" style="flex-shrink: 0;">
+      <form id="chat-form-assistant" style="flex-shrink: 0;">
         <input
           type="text"
-          id="user-input"
+          id="user-input-assistant"
           name="userInput"
           placeholder="Introdu întrebarea ta:"
         />
-        <button type="submit">
+        <button id="submit-chat-button" type="submit">
           <svg
             style="width: 1rem;"
             xmlns="http://www.w3.org/2000/svg"
@@ -91,6 +91,5 @@
         />
       </svg>
     </button>
- 
   </body>
 </html>
