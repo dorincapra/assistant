@@ -14,7 +14,7 @@ function embedChat(serverUrl) {
       // Fetch and append the CSS
       const cssLink = document.createElement("link");
       cssLink.rel = "stylesheet";
-      cssLink.href = `http://myprojects.ro/styles.css`;
+      cssLink.href = `https://myprojects.ro/styles.css`;
       document.head.appendChild(cssLink);
 
       // Fetch and append the JavaScript
