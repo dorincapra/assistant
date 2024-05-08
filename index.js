@@ -13,7 +13,7 @@ const port = process.env.PORT || 3000;
 
 // Configure CORS options
 const corsOptions = {
-  origin: "https://wordpress.calculatorleasing.ro", // Allow only this origin to access
+  origin: "https://calculatorleasing.ro", // Allow only this origin to access
   optionsSuccessStatus: 200, // Some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 
