@@ -1,5 +1,5 @@
 document
-  .getElementById("chat-form")
+  .getElementById("chat-form-assistant")
   .addEventListener("submit", async function (event) {
     event.preventDefault();
 
