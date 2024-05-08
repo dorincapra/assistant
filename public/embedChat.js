@@ -15,10 +15,15 @@ async function embedChat(serverUrl) {
     cssLink.href = `${serverUrl}/styles.css`;
     document.head.appendChild(cssLink);
 
-    // Append JavaScript
+    // Append JavaScript for main chat functionality
     const scriptTag = document.createElement("script");
     scriptTag.src = `${serverUrl}/scripts.js`;
     document.body.appendChild(scriptTag);
+
+    // Append additional JavaScript to handle incoming responses
+    const responseHandlerScript = document.createElement("script");
+    responseHandlerScript.src = `${serverUrl}/incomingResponseHandler.js`;
+    document.body.appendChild(responseHandlerScript);
   } catch (error) {
     console.error("Error embedding chat:", error);
     // Implement more user-friendly error handling here
