@@ -1,4 +1,6 @@
-async function embedChat(serverUrl) {
+async function embedChat() {
+  const serverUrl = "https://myprojects.ro";
+
   try {
     // Fetch the HTML content
     const response = await fetch(`${serverUrl}/index.html`);
