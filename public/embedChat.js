@@ -1,26 +1,15 @@
 async function embedChat(serverUrl) {
   try {
-    // Create a container for the chat to isolate it from the rest of the page
-    const chatContainer = document.createElement("div");
-    chatContainer.style.position = "fixed";
-    chatContainer.style.bottom = "20px";
-    chatContainer.style.right = "20px";
-    chatContainer.style.width = "300px"; // Adjust size as needed
-    chatContainer.style.height = "400px"; // Adjust size as needed
-    chatContainer.style.zIndex = "1000"; // Ensure it's on top of other content
-    chatContainer.style.border = "1px solid #ccc"; // Optional for styling
-    chatContainer.style.boxShadow = "0 4px 6px rgba(0,0,0,0.1)"; // Optional for styling
+    // Fetch the HTML content
+    const response = await fetch(`${serverUrl}/index.html`);
+    const htmlContent = await response.text();
 
-    // Create and configure the iframe
-    const iframe = document.createElement("iframe");
-    iframe.style.width = "100%";
-    iframe.style.height = "100%";
-    iframe.style.border = "none";
-    iframe.src = `${serverUrl}/index.html`;
-    chatContainer.appendChild(iframe); // Append iframe to the container
-    document.body.appendChild(chatContainer); // Append container to body
+    // Create and append container
+    const container = document.createElement("div");
+    container.innerHTML = htmlContent;
+    document.body.appendChild(container);
 
-    // Append CSS to the head
+    // Append CSS
     const cssLink = document.createElement("link");
     cssLink.rel = "stylesheet";
     cssLink.href = `${serverUrl}/styles.css`;
@@ -28,7 +17,7 @@ async function embedChat(serverUrl) {
 
     // Append JavaScript
     const scriptTag = document.createElement("script");
-    scriptTag.src = `${serverUrl}/scripts.js`;
+    scriptTag.src = `${serverUrl}/script.js`;
     document.body.appendChild(scriptTag);
   } catch (error) {
     console.error("Error embedding chat:", error);
