@@ -49,7 +49,7 @@ document
 
       function handleStream(data) {
         if (data.type === "textCreated" && isFirstChunk) {
-          initialText = data.text.value;
+          initialText = data.text?.value || ""; // Use optional chaining and fallback to empty string
           lastSpan.textContent = `Asistent: ${initialText.replace(
             /\【.*?\】/g,
             ""
@@ -57,10 +57,12 @@ document
           isFirstChunk = false; // Now handle subsequent deltas normally
         } else if (data.type === "textDelta") {
           if (!firstDeltaReceived && data.textDelta === initialText) {
-            // If the first delta is identical to the initial text, ignore it
             firstDeltaReceived = true; // Mark the first delta as received
           } else {
-            lastSpan.textContent += data.textDelta.replace(/\【.*?\】/g, "");
+            lastSpan.textContent += (data.textDelta || "").replace(
+              /\【.*?\】/g,
+              ""
+            ); // Handle undefined gracefully
           }
         }
       }
