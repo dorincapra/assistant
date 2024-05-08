@@ -1,5 +1,9 @@
 async function embedChat(serverUrl) {
   try {
+    // Fetch the HTML content
+    const response = await fetch(`${serverUrl}/index.html`);
+    const htmlContent = await response.text();
+
     // Create a container for the chat to isolate it from the rest of the page
     const chatContainer = document.createElement("div");
     chatContainer.style.position = "fixed";
@@ -10,15 +14,9 @@ async function embedChat(serverUrl) {
     chatContainer.style.zIndex = "1000"; // Ensure it's on top of other content
     chatContainer.style.border = "1px solid #ccc"; // Optional for styling
     chatContainer.style.boxShadow = "0 4px 6px rgba(0,0,0,0.1)"; // Optional for styling
-
-    // Create and configure the iframe
-    const iframe = document.createElement("iframe");
-    iframe.style.width = "100%";
-    iframe.style.height = "100%";
-    iframe.style.border = "none";
-    iframe.src = `${serverUrl}/index.html`;
-    chatContainer.appendChild(iframe); // Append iframe to the container
-    document.body.appendChild(chatContainer); // Append container to body
+    chatContainer.style.overflow = "hidden"; // Prevents content from spilling out
+    chatContainer.innerHTML = htmlContent; // Set fetched HTML content inside the container
+    document.body.appendChild(chatContainer); // Append the container to the body
 
     // Append CSS to the head
     const cssLink = document.createElement("link");
@@ -31,11 +29,12 @@ async function embedChat(serverUrl) {
     scriptTag.src = `${serverUrl}/scripts.js`;
     document.body.appendChild(scriptTag);
 
-    // Response handler
-    const handler = document.createElement("script");
-    handler.src = `${serverUrl}/incomingResponseHandler.js`;
-    document.body.appendChild(handler);
+    // Fetch and append additional JavaScript for incoming response handling
+    const responseHandlerScript = document.createElement("script");
+    responseHandlerScript.src = `${serverUrl}/incomingResponseHandler.js`;
+    document.body.appendChild(responseHandlerScript);
   } catch (error) {
     console.error("Error embedding chat:", error);
+    // Implement more user-friendly error handling here
   }
 }
