@@ -16,7 +16,7 @@ async function embedChat(serverUrl) {
 
     // Append JavaScript
     const scriptTag = document.createElement("script");
-    scriptTag.src = `${serverUrl}/script.js`;
+    scriptTag.src = `${serverUrl}/scripts.js`;
     document.body.appendChild(scriptTag);
   } catch (error) {
     console.error("Error embedding chat:", error);
