@@ -9,23 +9,23 @@ async function embedChat(serverUrl) {
     container.innerHTML = htmlContent;
     document.body.appendChild(container);
 
-    // Append CSS
+    // Append CSS from the chat server, not the website's root
     const cssLink = document.createElement("link");
     cssLink.rel = "stylesheet";
-    cssLink.href = `${serverUrl}/styles.css`;
+    cssLink.href = `${serverUrl}/styles.css`; // Make sure this points to the chat server
     document.head.appendChild(cssLink);
 
-    // Append JavaScript for main chat functionality
+    // Append JavaScript from the chat server
     const scriptTag = document.createElement("script");
     scriptTag.src = `${serverUrl}/scripts.js`;
     document.body.appendChild(scriptTag);
-
-    // Append additional JavaScript to handle incoming responses
-    const responseHandlerScript = document.createElement("script");
-    responseHandlerScript.src = `${serverUrl}/incomingResponseHandler.js`;
-    document.body.appendChild(responseHandlerScript);
   } catch (error) {
     console.error("Error embedding chat:", error);
     // Implement more user-friendly error handling here
   }
+
+  // Append additional JavaScript to handle incoming responses
+  const responseHandlerScript = document.createElement("script");
+  responseHandlerScript.src = `${serverUrl}/incomingResponseHandler.js`;
+  document.body.appendChild(responseHandlerScript);
 }
