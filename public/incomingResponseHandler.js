@@ -3,7 +3,9 @@ document
   .addEventListener("submit", async function (event) {
     event.preventDefault();
 
-    const userInput = document.getElementById("user-input").value.trim();
+    const userInput = document
+      .getElementById("user-input-assistant")
+      .value.trim();
     if (userInput === "") return;
 
     // Append user's message to chat area inside a span within a paragraph
@@ -13,11 +15,11 @@ document
     userMessageSpan.classList.add("user-message");
     userMessageSpan.textContent = `Tu: ${userInput}`;
     userParagraph.appendChild(userMessageSpan);
-    const chatArea = document.getElementById("chat-area");
+    const chatArea = document.getElementById("chat-area-assistant");
     chatArea.appendChild(userParagraph);
 
     // Clear input field
-    document.getElementById("user-input").value = "";
+    document.getElementById("user-input-assistant").value = "";
 
     //scroll down
     chatArea.scrollTop = chatArea.scrollHeight;
