@@ -24,7 +24,8 @@ document
 
     // Fetch response from server
     try {
-      const response = await fetch("/assistant", {
+      const response = await fetch("https://myprojects.ro/assistant", {
+        // Updated URL
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
