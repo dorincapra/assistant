@@ -1,5 +1,5 @@
 async function embedChat() {
-  const serverUrl = "https://myprojects.ro";
+  const serverUrl = "https://assistant-w8kxd.ondigitalocean.app";
 
   try {
     // Fetch the HTML content
