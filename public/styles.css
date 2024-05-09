@@ -1,8 +1,11 @@
 @import url("https://fonts.googleapis.com/css2?family=Poetsen+One&display=swap");
+
 #h1header {
+  font-family: "Poetsen One";
   color: #fff;
   letter-spacing: 0.1rem;
 }
+
 #chat-container-assistant {
   position: fixed;
   width: 96%; /* Full screen on mobile */
@@ -20,11 +23,13 @@
   transition: visibility 0s 0.5s, opacity 0.5s ease;
   z-index: 100;
 }
+
 #chat-container-assistant.chat-shown {
   visibility: visible;
   opacity: 1;
   transition: visibility 0s 0s, opacity 0.5s ease;
 }
+
 #toggle-chat-btn {
   position: fixed;
   bottom: 1.4%; /* Updated to 5% from the bottom */
@@ -44,13 +49,16 @@
   transition: all 0.5s ease;
   opacity: 1;
 }
+
 #toggle-chat-btn:hover {
   background-color: #0056b3;
 }
+
 #toggle-chat-btn.chat-hidden {
   opacity: 0;
   pointer-events: none;
 }
+
 #close-chat-btn {
   position: absolute;
   top: 10px;
@@ -62,29 +70,36 @@
   z-index: 200;
   display: none;
 }
+
 #chat-container-assistant.chat-shown #close-chat-btn {
   display: block;
 }
+
 #header-assistant {
   background-color: #007bff;
 }
+
 #header-assistant,
 #chat-area-assistant,
 #chat-form-assistant {
   padding: 15px;
 }
+
 #chat-area-assistant {
   padding-bottom: 60px;
   overflow-y: auto;
   flex-grow: 1;
 }
+
 #chat-area-assistant::-webkit-scrollbar {
   width: 5px;
   background-color: #ccc;
 }
+
 #chat-area-assistant::-webkit-scrollbar-thumb {
   background: #888;
 }
+
 #chat-form-assistant {
   display: flex; /* Aligns children (input and button) inline */
   position: absolute;
@@ -94,14 +109,17 @@
   background: #f0f0f0;
   padding: 10px; /* Adds padding inside the form */
 }
+
 #user-input-assistant,
 #submit-chat-button {
   padding: 10px;
   font-size: 16px;
 }
+
 #user-input:focus-visible {
   outline: 1px solid #007bff;
 }
+
 #submit-chat-button {
   padding: 10px 20px;
   background-color: #007bff;
@@ -115,10 +133,12 @@
   justify-content: center;
   transition: all 0.5s ease;
 }
+
 /* Styling for hover state of the button for better user feedback */
 #submit-chat-button:hover {
   background-color: #0056b3;
 }
+
 #user-input-assistant {
   flex: 1; /* Takes up the remaining space */
   padding: 10px;
@@ -128,9 +148,11 @@
   border-radius: 10px 0 0 10px; /* Rounded left corners */
   margin-right: -1px; /* Removes gap between input and button */
 }
+
 #user-input-assistant:focus {
   outline: 1px solid #ccc;
 }
+
 .user-message,
 .assistant-message {
   display: inline-block;
@@ -138,19 +160,23 @@
   border-radius: 15px;
   margin: 5px;
 }
+
 .user-message {
   background-color: #007bff;
   color: white;
   text-align: right;
 }
+
 .assistant-message {
   background-color: #f0f0f0;
   color: #333;
   text-align: left;
 }
+
 .userP {
   text-align: right;
 }
+
 @media (min-width: 768px) {
   #chat-container-assistant {
     width: 450px; /* 20% of screen on larger screens */
@@ -159,6 +185,7 @@
     right: 1.4%; /* Align to the right */
     top: 21.8%; /* Centered vertically */
   }
+
   #toggle-chat-btn {
     right: 1%; /* Adjust position slightly if needed */
     bottom: 2%;
