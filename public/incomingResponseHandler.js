@@ -26,14 +26,17 @@ document
 
     // Fetch response from server
     try {
-      const response = await fetch("https://myprojects.ro/assistant", {
-        // Updated URL
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body: new URLSearchParams({ userInput: userInput }),
-      });
+      const response = await fetch(
+        "https://assistant-w8kxd.ondigitalocean.app/assistant",
+        {
+          // Updated URL
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body: new URLSearchParams({ userInput: userInput }),
+        }
+      );
 
       if (!response.ok) {
         throw new Error(`Server responded with status ${response.status}`);
